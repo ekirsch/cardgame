@@ -39,7 +39,7 @@ var cardDeck = document.getElementById("cardDeck")
 cardDeck.appendChild(cardContDiv)
 cardContDiv.onclick = function(e){
     console.log(e.currentTarget)
-    setTimeout(function){ e.currentTarget.classList.toggle("flip_card")})
+   // setTimeout(function){ e.currentTarget.classList.toggle("flip_card")})
 
      e.currentTarget.classList.toggle("flip_card")
             
