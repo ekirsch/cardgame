@@ -24,9 +24,16 @@
 .card_front{
     background-color: wheat
     padding: 10px;
-    width:100%;
+    width:150%;
     height:100%;
     position: absolute
+        
+}
+#discardPile{
+    width: 300px;
+    height: 300px;
+    border: thin white dotted;
+    position: relative;
 }
 .card_container.flip_card .flip{
     transform: rotateY(180deg);
@@ -57,7 +64,7 @@ background-color: mediumturquoise
     
 }
 #cardDeck{
-    width: 1512px;
+    width: 1050px;
     margin: 0 auto;
 }
 
@@ -67,4 +74,8 @@ background-color: mediumturquoise
         height: 240px;
         background-color: salmon
     } 
+}
+.discard{
+    position: absolute;
+    
 }
