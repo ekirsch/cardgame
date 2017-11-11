@@ -8,19 +8,19 @@ var cardSuit = ["diamonds", "spades", "clubs", "hearts"]
 var Card = function(){
    
     this.suit = document.createElement('img')
+    this.cardContDiv = document.createElement('div');
     this.number = document.createElement('div')
     this.init = function(){
 
     
-        var cardContDiv = document.createElement('div'),
-        flipDiv  =  document.createElement('div'),
+        var flipDiv  =  document.createElement('div'),
         frontDiv = document.createElement('div'),
         backDiv  = document.createElement('div'),
         catDiv = document.createElement('div');
 
         this.suit.src = "images/hearts.svg"
 
-        cardContDiv.className = 'card_container'
+        this.cardContDiv.className = 'card_container'
         flipDiv.className = 'flip';
         frontDiv.className = 'card_front';
         backDiv.className = 'card_back';
@@ -33,10 +33,17 @@ var Card = function(){
         frontDiv.appendChild(catDiv);
         flipDiv.appendChild(frontDiv)
         flipDiv.appendChild(backDiv)
-        cardContDiv.appendChild(flipDiv)
+        this.cardContDiv.appendChild(flipDiv)
         var cardDeck = document.getElementById("cardDeck")
-        cardDeck.appendChild(cardContDiv)
-        cardContDiv.onclick = function(e){
+        cardDeck.appendChild(this.cardContDiv)
+        this.cardContDiv.id = this.id 
+        this.cardContDiv.draggable = true;
+        this.cardContDiv.ondragstart = function(e){
+            e.dataTransfer.setData("text", e.currentTarget.id);
+}
+        }
+        
+        this.cardContDiv.onclick = function(e){
             console.log(e.currentTarget)
         //    setTimeout(function){ e.currentTarget.classList.toggle("flip_card")})
 
@@ -44,19 +51,33 @@ var Card = function(){
 
         }
     }
-}
-for (var i = cardNumbers.length - 1; i >= 0; i--){
-    
-    for (var j = cardSuit.length - 1; j >= 0; j--){
-         var CardDeck = new Card();
-            CardDeck.init();
-        CardDeck.number.innerHTML = cardNumbers[i]
-        CardDeck.suit.src = "images/" + cardSuit[j] + ".svg";
-        
+    for (var i = cardNumbers.length - 1; i >= 0; i--){
+
+        for (var j = cardSuit.length - 1; j >= 0; j--){
+             var CardDeck = new Card();
+                CardDeck.init();
+            CardDeck.number.innerHTML = cardNumbers[i]
+            CardDeck.suit.src = "images/" + cardSuit[j] + ".svg";
+            CardDeck.cardContDiv.id = cardSuit + cardNumbers[i]
+
+        }
     }
-}
-    
-    var shuffleBtn= document.getElementById('shuffle');
+    var dropArea = document.getElementById('discardPile')
+    dropArea.addEventListener("dragover",function(e){
+        e.preventDefault()
+    })
+    dropArea.addEventListener("drop", function(e){
+        e.preventDefault();
+        var data = e.dataTransfer.getData("text");
+        console.log(e)
+        var cardDraging=document.getElementById(data)
+        cardDraging.classList.add("discard")
+        e.currentTarget.appendChild(cardDraging)        
+     })
+
+
+
+var shuffleBtn= document.getElementById('shuffle');
     
     shuffleBtn.addEventListener("click",function(e){shuffle()})
 
@@ -97,20 +118,4 @@ function shuffle() {
 //var CardDeck3 = new Card();
 //CardDeck3.init();
 //CardDeck3.suit.src = "images/diamonds.svg"
-}
-
-
-
-
-//var CardDeck = new Card();
-//CardDeck.init();
-//
-//var CardDeck2 = new Card();
-//CardDeck2.init();
-//CardDeck2.suit.src = "images/spades.svg"
-//
-//var CardDeck3 = new Card();
-//CardDeck3.init();
-//CardDeck3.suit.src = "images/diamonds.svg"
-
 
