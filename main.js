@@ -1,10 +1,5 @@
 var cardNumbers = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 var cardSuit = ["diamonds", "spades", "clubs", "hearts"]
-
-
-
-
-
 var Card = function(){
    
     this.suit = document.createElement('img')
@@ -34,34 +29,47 @@ var Card = function(){
         flipDiv.appendChild(frontDiv)
         flipDiv.appendChild(backDiv)
         this.cardContDiv.appendChild(flipDiv)
-        var cardDeck = document.getElementById("cardDeck")
-        cardDeck.appendChild(this.cardContDiv)
+        
         this.cardContDiv.id = this.id 
         this.cardContDiv.draggable = true;
         this.cardContDiv.ondragstart = function(e){
             e.dataTransfer.setData("text", e.currentTarget.id);
-}
         }
+    
         
         this.cardContDiv.onclick = function(e){
             console.log(e.currentTarget)
         //    setTimeout(function){ e.currentTarget.classList.toggle("flip_card")})
 
              e.currentTarget.classList.toggle("flip_card")
-
+                
         }
+        return this.cardContDiv
     }
-    for (var i = cardNumbers.length - 1; i >= 0; i--){
+   
+}
 
+var Deck = function(){
+    this.cardDeck = document.getElementById("cardDeck")
+    this.init = function(){
+    
+        for (var i = cardNumbers.length - 1; i >= 0; i--){
         for (var j = cardSuit.length - 1; j >= 0; j--){
-             var CardDeck = new Card();
-                CardDeck.init();
-            CardDeck.number.innerHTML = cardNumbers[i]
-            CardDeck.suit.src = "images/" + cardSuit[j] + ".svg";
-            CardDeck.cardContDiv.id = cardSuit + cardNumbers[i]
-
+            var myCard = new Card();
+            var myCardcont =myCard.init();
+            myCard.number.innerHTML = cardNumbers[i]
+            myCard.suit.src = "images/" + cardSuit[j] + ".svg";
+            myCard.cardContDiv.id = cardSuit + cardNumbers[i]
+            this.cardDeck.appendChild(myCardcont)
         }
     }
+        
+    }
+}
+
+
+
+
     var dropArea = document.getElementById('discardPile')
     dropArea.addEventListener("dragover",function(e){
         e.preventDefault()
@@ -107,6 +115,8 @@ function shuffle() {
     }
   
 }
+var Game = new Deck();
+Game.init()
 
 //var CardDeck = new Card();
 //CardDeck.init();
